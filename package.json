@@ -1,0 +1,10 @@
+{
+  "name": "ifc-xeo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "viewer copy.js",
+  "type": "module",
+  "dependencies": {
+    "xeokit-sdk": "^1.15.1"
+  }
+}
