@@ -1,5 +1,21 @@
-(function (xeokitSdk_es_min_js, AnnotationsPlugin_js) {
+(function (xeokitSdk_es_min_js) {
   'use strict';
+
+  // import {AnnotationsPlugin} from '@xeokit/xeokit-sdk/src/plugins/AnnotationsPlugin/AnnotationsPlugin.js'
+  // import * as xeokit from 'https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js';
+
+  // const Viewer = xeokit.Viewer;
+  // const WebIFCLoaderPlugin = xeokit.WebIFCLoaderPlugin;
+  // const XKTLoaderPlugin = xeokit.XKTLoaderPlugin;
+  // const NavCubePlugin = xeokit.NavCubePlugin;
+  // const SectionPlanesPlugin = xeokit.SectionPlanesPlugin;
+  // const math = xeokit.math;
+  // const DistanceMeasurementsPlugin = xeokit.DistanceMeasurementsPlugin;
+  // const ContextMenu = xeokit.ContextMenu;
+  // const TreeViewPlugin = xeokit.TreeViewPlugin;
+  // const AnnotationsPlugin = xeokit.AnnotationsPlugin;
+
+  // The rest of your script
 
   const viewer = new xeokitSdk_es_min_js.Viewer({
       canvasId: "myCanvas",
@@ -295,7 +311,7 @@
   }
 
   // Initialize the annotations plugin
-  const annotations = new AnnotationsPlugin_js.AnnotationsPlugin(viewer, {
+  const annotations = new xeokitSdk_es_min_js.AnnotationsPlugin(viewer, {
     markerHTML: "<div class='annotation-marker' style='background-color: {{markerBGColor}};'>{{glyph}}</div>",
     labelHTML: "<div class='annotation-label' style='background-color: {{labelBGColor}};'>\
     <div class='annotation-title'>{{title}}</div>\
@@ -404,4 +420,4 @@
     }
   });
 
-})(xeokitSdk_es_min_js, AnnotationsPlugin_js);
+})(xeokitSdk_es_min_js);
