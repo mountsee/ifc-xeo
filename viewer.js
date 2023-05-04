@@ -334,6 +334,47 @@ const annotations = new AnnotationsPlugin(viewer, {
   }
 });
 
+
+
+const distm = new DistanceMeasurementsPlugin(viewer, {
+  defaultAxisVisible: false // <<------------ Hide axis wires
+});
+
+model.on("loaded", () => {
+
+  //------------------------------------------------------------------------------------------------------------------
+  // Create some DistanceMeasurements
+  //------------------------------------------------------------------------------------------------------------------
+
+  // Check if component with ID 'distm1' already exists in the scene
+  let componentExists = false;
+  for (const componentId in viewer.scene.components) {
+    const component = viewer.scene.components[componentId];
+    console.log(component)
+    if (component.id === "distm1") {
+      componentExists = true;
+      break;
+    }
+  }
+
+  // Create the component if it doesn't exist
+  if (!componentExists) {
+    const myMeasurement1 = distm.createMeasurement({
+        id: "distm1",
+        origin: {
+            entity: viewer.scene.objects["1OyRCOdfXBQQETdHuzbyt2"],
+            worldPos: [-3.515, 5.34, 0.0]
+        },
+        target: {
+            entity: viewer.scene.objects["0GsyhFZ7LE7Bs0gbJNdfxZ"],
+            worldPos: [2.91, 5.34, 0.0]
+        },
+        visible: true,
+        wireVisible: true
+    });
+  }
+});
+
 let numAnnotations = 0;
 let annotationsEnabled = false;
 
@@ -386,44 +427,5 @@ viewer.scene.input.on("mouseclicked", (coords) => {
         }
       });
     }
-  }
-});
-
-const distm = new DistanceMeasurementsPlugin(viewer, {
-  defaultAxisVisible: false // <<------------ Hide axis wires
-});
-
-model.on("loaded", () => {
-
-  //------------------------------------------------------------------------------------------------------------------
-  // Create some DistanceMeasurements
-  //------------------------------------------------------------------------------------------------------------------
-
-  // Check if component with ID 'distm1' already exists in the scene
-  let componentExists = false;
-  for (const componentId in viewer.scene.components) {
-    const component = viewer.scene.components[componentId];
-    console.log(component)
-    if (component.id === "distm1") {
-      componentExists = true;
-      break;
-    }
-  }
-
-  // Create the component if it doesn't exist
-  if (!componentExists) {
-    const myMeasurement1 = distm.createMeasurement({
-        id: "distm1",
-        origin: {
-            entity: viewer.scene.objects["1OyRCOdfXBQQETdHuzbyt2"],
-            worldPos: [-3.515, 5.34, 0.0]
-        },
-        target: {
-            entity: viewer.scene.objects["0GsyhFZ7LE7Bs0gbJNdfxZ"],
-            worldPos: [2.91, 5.34, 0.0]
-        },
-        visible: true,
-        wireVisible: true
-    });
   }
 });
