@@ -1,15 +1,23 @@
 {
-  "name": "ifc-xeo",
+  "name": "ifc.js-parcel",
   "version": "1.0.0",
-  "main": "viewer copy.js",
-  "type": "module",
-  "dependencies": {
-    "xeokit-sdk": "^1.15.1"
-  },
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c ./rollup.config.js",
+    "start": "rollup -w -c ./rollup.config.js"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "dependencies": {
+    "rollup-plugin-css-only": "^3.1.0",
+    "three": "^0.141.0",
+    "web-ifc": "0.0.33",
+    "web-ifc-three": "0.0.116"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "rollup": "^2.79.1"
+  }
 }
