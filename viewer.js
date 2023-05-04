@@ -7,9 +7,9 @@ import {
   math, 
   DistanceMeasurementsPlugin, 
   ContextMenu,
-  TreeViewPlugin,
-  AnnotationsPlugin} from
+  TreeViewPlugin} from
 "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js";
+import {AnnotationsPlugin} from '@xeokit/xeokit-sdk/src/plugins/AnnotationsPlugin/AnnotationsPlugin.js'
 
 const viewer = new Viewer({
     canvasId: "myCanvas",
