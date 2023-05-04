@@ -1,15 +1,10 @@
 {
   "name": "ifc-xeo",
   "version": "1.0.0",
+  "description": "",
   "main": "viewer copy.js",
   "type": "module",
   "dependencies": {
     "xeokit-sdk": "^1.15.1"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  }
 }

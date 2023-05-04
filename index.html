@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>xeokit Example</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            user-select: none;
+        }
+
+        .menu {
+            position: absolute;
+            z-index: 1;
+            top: 10px;
+            right: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu button {
+            margin: 5px;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+        }
+
+        .menu button:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+<canvas id="myCanvas"></canvas>
+<canvas id="myNavCubeCanvas"></canvas>
+<canvas id="mySectionPlanesOverviewCanvas"></canvas>
+<div id="treeViewContainer"></div>
+
+<div class="menu">
+    <button id="isoButton">Orthographic</button>
+    <button id="resetButton"><img src="https://img.icons8.com/android/24/null/home.png"/></button>
+    <!-- <button id="edgesButton">Edges</button> -->
+    <button id="fittedButton"><img src="zoom-fit-page.svg" width="24" height="24"> </button>
+    <button id="transparentButton">Transparent</button>
+    <!-- <button id="colorByTypeButton">Color By Type</button> -->
+    <button id="createSectionPlaneButton" onclick="changeScIcon()"><img id="secIcon" src="scissors-icon.png" width="24" height="24"> </button>
+    <!-- <button id="colorByLevelButton">Color By Level</button> -->
+    <button id="measureDistButton" onclick="changeIcon()"><img id="lengthIcon" src="icons8-length-96.png" width="24" height="24"> </button>
+    <button id="PropertiesBtn"><img src="https://img.icons8.com/android/24/null/cursor.png"/></button>
+    <!-- <button id="ToggleAnnotationsBtn">Tog anno</button> -->
+    <button id="showTreeButton"> <img src="https://img.icons8.com/android/24/null/flow-chart.png"/></button> 
+    
+<!-- Add a div to display the properties of the selected object -->
+<div id="propertiesPanel" style="display: none;"></div>
+<!-- Include the xeokit SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js"></script>
+<script src="viewer.js" type="module"></script>
+</body>
+
+<script>
+    // var img = document.getElementById("lengthIcon");
+    // var isLengthIcon = true;
+  
+    // document.getElementById("measureDistButton").addEventListener("click", function() {
+    //   if (isLengthIcon) {
+    //     img.src = "lengthx.png";
+    //     console.log(img.src)
+    //   } else {
+    //     img.src = "icons8-length-96.png";
+    //     console.log(img.src)
+    //   }
+    //   isLengthIcon = !isLengthIcon;
+    // });
+    function changeIcon() {
+    var img = document.getElementById("lengthIcon");
+    if (img.getAttribute("src") === "icons8-length-96.png") {
+        // console.log(img.getAttribute("src"));
+        img.setAttribute("src", "lengthx.png");
+    } else {
+        img.setAttribute("src", "icons8-length-96.png");
+        // console.log(img.getAttribute("src"));
+    }
+}
+    function changeScIcon() {
+    var scimg = document.getElementById("secIcon");
+    if (scimg.getAttribute("src") === "scissors-icon.png") {
+        scimg.setAttribute("src", "scissors-iconx.png");
+    } else {
+        scimg.setAttribute("src", "scissors-icon.png");
+    }
+}
+    
+  </script>
+
+</html>

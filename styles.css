@@ -235,3 +235,157 @@ body {
     width: calc(100% - var(--left));
 }
 
+
+/* ----------------------------------------------------------------------------------------------------------*/
+/* TreeViewPlugin */
+/* ----------------------------------------------------------------------------------------------------------*/
+
+#treeViewContainer {
+    pointer-events: all;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: black;
+    top: 80px;
+    z-index: 1000;
+    float: left;
+    left: 0;
+    padding-left: 10px;
+    /* font-family: 'Roboto', sans-serif; */
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    width: 350px;
+}
+
+#treeViewContainer ul li {
+    position: relative;
+    width: 500px;
+    pointer-events: none;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    vertical-align: middle;
+}
+
+#treeViewContainer ul li.hover {
+    background-color: #f0f0f0;
+    z-index: 1;
+}
+
+#treeViewContainer ul li a {
+    background-color: #eee;
+    border-radius: 50%;
+    color: #000;
+    display: inline-block;
+    height: 1.5em;
+    left: -1.5em;
+    position: absolute;
+    text-align: center;
+    text-decoration: none;
+    width: 1.5em;
+    pointer-events: all;
+}
+
+#treeViewContainer ul li a.minus {
+    background-color: #eee;
+    pointer-events: all;
+}
+
+#treeViewContainer ul li a.plus {
+    background-color: #ded;
+    pointer-events: all;
+}
+
+
+#treeViewContainer ul li a:hover {
+    background-color: rgb(139, 147, 139);
+    /* z-index: 1; */
+}
+
+#treeViewContainer ul li span {
+    display: inline-block;
+    width: calc(100% - 50px);
+    padding-left: 2px;
+    pointer-events: all;
+    height: 23px;
+}
+
+.annotation-marker {
+    color: #ffffff;
+    line-height: 1.8;
+    text-align: center;
+    font-family: "monospace";
+    font-weight: bold;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 15px;
+    border: 2px solid #ffffff;
+    background: black;
+    visibility: hidden;
+    box-shadow: 5px 5px 15px 1px #000000;
+    z-index: 0;
+}
+
+.annotation-label {
+    position: absolute;
+    max-width: 250px;
+    min-height: 50px;
+    padding: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    background: #ffffff;
+    color: #000000;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 8px;
+    border: #ffffff solid 2px;
+    box-shadow: 5px 5px 15px 1px #000000;
+    z-index: 90000;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.annotation-label:after {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 8px 12px 8px 0;
+    border-color: transparent white;
+    display: block;
+    width: 0;
+    z-index: 1;
+    margin-top: -11px;
+    left: -12px;
+    top: 20px;
+}
+
+.annotation-label:before {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 9px 13px 9px 0;
+    border-color: transparent #ffffff;
+    display: block;
+    width: 0;
+    z-index: 0;
+    margin-top: -12px;
+    left: -15px;
+    top: 20px;
+}
+
+.annotation-title {
+    /* font: normal 20px arial, serif; */
+    font-size: 16px;
+    margin-bottom: 8px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.annotation-desc {
+    font: normal 14px arial, serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}

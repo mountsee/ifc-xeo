@@ -1,4 +1,14 @@
-import {Viewer, WebIFCLoaderPlugin, XKTLoaderPlugin, NavCubePlugin, SectionPlanesPlugin, math, DistanceMeasurementsPlugin, ContextMenu} from
+import {
+  Viewer, 
+  WebIFCLoaderPlugin, 
+  XKTLoaderPlugin, 
+  NavCubePlugin, 
+  SectionPlanesPlugin, 
+  math, 
+  DistanceMeasurementsPlugin, 
+  ContextMenu,
+  TreeViewPlugin,
+  AnnotationsPlugin} from
 "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js";
 
 const viewer = new Viewer({
@@ -29,6 +39,7 @@ const webIFCLoader = new WebIFCLoaderPlugin(viewer, {
 const model = webIFCLoader.load({
     src: "test.ifc",
     edges: true,
+    loadMetadata: true, // Default
     backfaces: true // Sometimes it's best to show backfaces, so that sliced objects look less odd
 });
 
@@ -67,7 +78,7 @@ createSectionPlaneButton.addEventListener("click", () => {
         sectionPlanes.clear(); // Remove all existing section planes
     }
     createSectionPlaneButton.classList.toggle("active", createSectionPlaneMode); // Toggle the active class
-    createSectionPlaneButton.textContent = "Remove Section Planes";
+    // createSectionPlaneButton.textContent = "Remove Section Planes";
 });
 
 //------------------------------------------------------------------------------------------------------------------
@@ -99,13 +110,13 @@ let createCameraViewMode = false;
 
 cameraViewType.addEventListener("click", () => {
     createCameraViewMode = !createCameraViewMode; // Toggle the value of createSectionPlaneMode
-    if (!createCameraViewMode) {
+    if (createCameraViewMode) {
         camera.projection = "ortho"; // Switch to ortho
-        cameraViewType.textContent = "Ortho";
+        cameraViewType.textContent = "Isometric";
     }
     else {
         camera.projection = "perspective"; // Switch to perspective
-        cameraViewType.textContent = "Isometric";
+        cameraViewType.textContent = "Ortho";
     }
 });
 
@@ -208,12 +219,18 @@ const canvasContextMenu = new ContextMenu({
 });
 
 const mDistanceButton = document.getElementById("measureDistButton");
+// const buttonImage = mDistanceButton.querySelector("img")
+// var img = document.getElementById("icon");
 
 mDistanceButton.addEventListener("click", () => {
   measureDistanceMode = !measureDistanceMode;
 
   if (measureDistanceMode) {
-    mDistanceButton.textContent = "Delete Dims";
+    // buttonImage.src = "C:\\Users\\Digitale Planung 1\\Documents\\GitHub\\ifc-xeo\\icons8-length-96.png"
+    // img.setAttribute("src", "icons8-length-96.png");
+    // img.setAttribute("src", "lengthx.png");
+    // console.log(img.getAttribute("src"))
+    // mDistanceButton.textContent = "Delete Dims";
     mDistanceButton.classList.add("active");
     distanceMeasurements.on("mouseOver", (e) => {
       e.distanceMeasurement.setHighlighted(true);
@@ -244,7 +261,12 @@ mDistanceButton.addEventListener("click", () => {
       measurementsCleared = false;
     }
   } else {
-    mDistanceButton.textContent = "Measure Dist";
+    // mDistanceButton.textContent = "Measure Dist";
+    // buttonImage.src = "C:\\Users\\Digitale Planung 1\\Documents\\GitHub\\ifc-xeo\\lengthx.png"
+    // img.setAttribute("src", "lengthx.png");
+    // console.log(buttonImage)
+    // img.setAttribute("src", "icons8-length-96.png");
+    // console.log(img.getAttribute("src"))
     mDistanceButton.classList.remove("active");
     distanceMeasurements.control.deactivate();
     distanceMeasurements.clear();
@@ -252,22 +274,142 @@ mDistanceButton.addEventListener("click", () => {
   }
 });
 
-// const pickObjectButton = document.getElementById("pickObjectButton");
-// let pickObjectMode = false;
+new TreeViewPlugin(viewer, {
+    containerElement: document.getElementById("treeViewContainer"),
+    autoExpandDepth: 3 // Initially expand the root tree node
+});
 
-// pickObjectButton.addEventListener("click", () => {
-//   pickObjectMode = true;
-// });
+const showTreeButton = document.getElementById("showTreeButton");
+const treeViewContainer = document.getElementById("treeViewContainer");
+let treeViewVisible = false;
+treeViewContainer.style.display = "none"
+
+showTreeButton.addEventListener("click", () => {
+  if (treeViewVisible) {
+    treeViewContainer.style.display = "none";
+  } else {
+    treeViewContainer.style.display = "block";
+  }
+  treeViewVisible = !treeViewVisible;
+});
+
+var listItems = document.querySelectorAll('#treeViewContainer ul li');
+
+for (var i = 0; i < listItems.length; i++) {
+    listItems[i].addEventListener('mouseover', function () {
+        this.classList.add('hover');
+    });
+    listItems[i].addEventListener('mouseout', function () {
+        this.classList.remove('hover');
+    });
+}
+
+// Initialize the annotations plugin
+const annotations = new AnnotationsPlugin(viewer, {
+  markerHTML: "<div class='annotation-marker' style='background-color: {{markerBGColor}};'>{{glyph}}</div>",
+  labelHTML: "<div class='annotation-label' style='background-color: {{labelBGColor}};'>\
+    <div class='annotation-title'>{{title}}</div>\
+    <div class='annotation-desc'>{{description}}</div>\
+    </div>",
+  values: {
+    markerBGColor: "red",
+    labelBGColor: "white",
+    glyph: "X",
+    title: "Untitled",
+    description: "No description"
+  }
+});
+
+let numAnnotations = 0;
+let annotationsEnabled = false;
+
+// Add event listener to PropertiesBtn button
+const propertiesBtn = document.getElementById("PropertiesBtn");
+propertiesBtn.addEventListener("click", () => {
+  annotationsEnabled = !annotationsEnabled; // Toggle the boolean variable
+  if (!annotationsEnabled) { annotations.clear()
+  }
+});
+
 
 viewer.scene.input.on("mouseclicked", (coords) => {
-    const pickResult = viewer.scene.pick({
-      canvasPos: coords,
-      pickSurface: true
-    });
-  
-    if (pickResult) {
-      const entityId = pickResult.entity.id;
-      console.log("Selected entity ID: ", entityId);
-    //   viewer.getObjectInfo(entityId)
-    }
+  const pickResult = viewer.scene.pick({
+    canvasPos: coords,
+    pickSurface: true
   });
+
+  if (pickResult) {
+    const entity = pickResult.entity;
+    const aabb = entity.aabb;
+    const entityCenter = math.getAABB3Center(aabb);
+    console.log(entity.id)
+
+    const metaObject = viewer.metaScene.metaObjects[entity.id];
+    const myArray = metaObject['type'].split(":");
+    let name = myArray[0];
+    
+    function fixIfcString(text) {
+      const fixedText = text.replace(/\\X\\FC/g, 'ü');
+      return fixedText;
+    }
+    
+    const type = fixIfcString(myArray[1]);
+    const output = "Type: " + type + "<br> IFC Type:" + metaObject['name'];
+    
+    if (annotationsEnabled) {
+      annotations.createAnnotation({
+        id: "myAnnotation" + numAnnotations++,
+        entity: entity,
+        worldPos: entityCenter,
+        occludable: false,
+        markerShown: true,
+        labelShown: true,
+        values: {
+          glyph: "" + numAnnotations,
+          title: fixIfcString(name),
+          description: output,
+          markerBGColor: "green"
+        }
+      });
+    }
+  }
+});
+
+const distm = new DistanceMeasurementsPlugin(viewer, {
+  defaultAxisVisible: false // <<------------ Hide axis wires
+});
+
+model.on("loaded", () => {
+
+  //------------------------------------------------------------------------------------------------------------------
+  // Create some DistanceMeasurements
+  //------------------------------------------------------------------------------------------------------------------
+
+  // Check if component with ID 'distm1' already exists in the scene
+  let componentExists = false;
+  for (const componentId in viewer.scene.components) {
+    const component = viewer.scene.components[componentId];
+    console.log(component)
+    if (component.id === "distm1") {
+      componentExists = true;
+      break;
+    }
+  }
+
+  // Create the component if it doesn't exist
+  if (!componentExists) {
+    const myMeasurement1 = distm.createMeasurement({
+        id: "distm1",
+        origin: {
+            entity: viewer.scene.objects["1OyRCOdfXBQQETdHuzbyt2"],
+            worldPos: [-3.515, 5.34, 0.0]
+        },
+        target: {
+            entity: viewer.scene.objects["0GsyhFZ7LE7Bs0gbJNdfxZ"],
+            worldPos: [2.91, 5.34, 0.0]
+        },
+        visible: true,
+        wireVisible: true
+    });
+  }
+});

@@ -4,13 +4,9 @@ import * as xeokit from 'xeokit-sdk';
 const ifcFilePath = 'test.ifc';
 const jsonFilePath = 'package.json';
 
-const model = new xeokit.Model();
+const xeokitMetadata = require('xeokit-metadata');
 
-xeokit.IfcLoader.load(ifcFilePath, model, () => {
-  const json = model.toJSON();
-  
-  // Write the JSON to a file
-  fs.writeFileSync(jsonFilePath, JSON.stringify(json, null, 2));
-  
-  console.log(`JSON saved to ${jsonFilePath}`);
+xeokitMetadata.load("test.ifc").then((metadata) => {
+  const json = metadata.toJSON();
+  console.log(json);
 });
