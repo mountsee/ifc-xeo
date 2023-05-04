@@ -11,20 +11,6 @@ import {
   AnnotationsPlugin} from
 "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js";
 // import {AnnotationsPlugin} from '@xeokit/xeokit-sdk/src/plugins/AnnotationsPlugin/AnnotationsPlugin.js'
-// import * as xeokit from 'https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js';
-
-// const Viewer = xeokit.Viewer;
-// const WebIFCLoaderPlugin = xeokit.WebIFCLoaderPlugin;
-// const XKTLoaderPlugin = xeokit.XKTLoaderPlugin;
-// const NavCubePlugin = xeokit.NavCubePlugin;
-// const SectionPlanesPlugin = xeokit.SectionPlanesPlugin;
-// const math = xeokit.math;
-// const DistanceMeasurementsPlugin = xeokit.DistanceMeasurementsPlugin;
-// const ContextMenu = xeokit.ContextMenu;
-// const TreeViewPlugin = xeokit.TreeViewPlugin;
-// const AnnotationsPlugin = xeokit.AnnotationsPlugin;
-
-// The rest of your script
 
 const viewer = new Viewer({
     canvasId: "myCanvas",
