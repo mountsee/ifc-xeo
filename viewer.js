@@ -1,3 +1,17 @@
+// import {
+//   Viewer, 
+//   WebIFCLoaderPlugin, 
+//   XKTLoaderPlugin, 
+//   NavCubePlugin, 
+//   SectionPlanesPlugin, 
+//   math, 
+//   DistanceMeasurementsPlugin, 
+//   ContextMenu,
+//   TreeViewPlugin,
+//   AnnotationsPlugin} from
+// "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js";
+// // import {AnnotationsPlugin} from '@xeokit/xeokit-sdk/src/plugins/AnnotationsPlugin/AnnotationsPlugin.js'
+
 import {
   Viewer, 
   WebIFCLoaderPlugin, 
@@ -10,7 +24,6 @@ import {
   TreeViewPlugin,
   AnnotationsPlugin} from
 "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js";
-// import {AnnotationsPlugin} from '@xeokit/xeokit-sdk/src/plugins/AnnotationsPlugin/AnnotationsPlugin.js'
 
 const viewer = new Viewer({
     canvasId: "myCanvas",
