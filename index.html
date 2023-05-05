@@ -50,16 +50,16 @@
 <div id="treeViewContainer"></div>
 
 <div class="menu">
-    <button id="isoButton">Orthographic</button>
+    <button id="isoButton" onclick="changeVwIcon()"><img id="vwIcon" src="ViewCube.png" width="24" height="24"></button>
     <button id="resetButton"><img src="https://img.icons8.com/android/24/null/home.png"/></button>
     <!-- <button id="edgesButton">Edges</button> -->
     <button id="fittedButton"><img src="zoom-fit-page.svg" width="24" height="24"> </button>
-    <button id="transparentButton">Transparent</button>
+    <!-- <button id="slctButton"></button> -->
     <!-- <button id="colorByTypeButton">Color By Type</button> -->
     <button id="createSectionPlaneButton" onclick="changeScIcon()"><img id="secIcon" src="scissors-icon.png" width="24" height="24"> </button>
     <!-- <button id="colorByLevelButton">Color By Level</button> -->
     <button id="measureDistButton" onclick="changeIcon()"><img id="lengthIcon" src="icons8-length-96.png" width="24" height="24"> </button>
-    <button id="PropertiesBtn"><img src="https://img.icons8.com/android/24/null/cursor.png"/></button>
+    <button id="PropertiesBtn" onclick="changePrIcon()" title="Wählen Sie ein Objekt aus, um Eigenschaften hinzuzufügen.&#013Klicken Sie auf diese Schaltfläche, um Eigenschaften zu löschen."><img id="prIcon" src="icons8-show-property-52.png" width="24" height="24"></button>
     <!-- <button id="ToggleAnnotationsBtn">Tog anno</button> -->
     <button id="showTreeButton"> <img src="https://img.icons8.com/android/24/null/flow-chart.png"/></button> 
     
@@ -101,6 +101,23 @@
         scimg.setAttribute("src", "scissors-iconx.png");
     } else {
         scimg.setAttribute("src", "scissors-icon.png");
+    }
+}
+
+function changeVwIcon() {
+    var scimg = document.getElementById("vwIcon");
+    if (scimg.getAttribute("src") === "ViewCube.png") {
+        scimg.setAttribute("src", "ViewCube_Persp.png");
+    } else {
+        scimg.setAttribute("src", "ViewCube.png");
+    }
+}
+function changePrIcon() {
+    var scimg = document.getElementById("prIcon");
+    if (scimg.getAttribute("src") === "icons8-show-property-52.png") {
+        scimg.setAttribute("src", "icons8-show-property-52x.png");
+    } else {
+        scimg.setAttribute("src", "icons8-show-property-52.png");
     }
 }
     

@@ -69,10 +69,10 @@ fittedButton.addEventListener("click", () => {
     viewer.cameraFlight.flyTo(model);
 });
 
-const transparentButton = document.getElementById("transparentButton");
-transparentButton.addEventListener("click", () => {
-    model.setOpacity(model.opacity === 1 ? 0.5 : 1);
-});
+// const transparentButton = document.getElementById("transparentButton");
+// transparentButton.addEventListener("click", () => {
+//     model.setOpacity(model.opacity === 1 ? 0.5 : 1);
+// });
 
 const createSectionPlaneButton = document.getElementById("createSectionPlaneButton");
 let createSectionPlaneMode = false;
@@ -126,11 +126,11 @@ cameraViewType.addEventListener("click", () => {
     createCameraViewMode = !createCameraViewMode; // Toggle the value of createSectionPlaneMode
     if (createCameraViewMode) {
         camera.projection = "ortho"; // Switch to ortho
-        cameraViewType.textContent = "Isometric";
+        // cameraViewType.textContent = "Isometric";
     }
     else {
         camera.projection = "perspective"; // Switch to perspective
-        cameraViewType.textContent = "Ortho";
+        // cameraViewType.textContent = "Ortho";
     }
 });
 
@@ -350,7 +350,7 @@ model.on("loaded", () => {
   let componentExists = false;
   for (const componentId in viewer.scene.components) {
     const component = viewer.scene.components[componentId];
-    console.log(component)
+    // console.log(component)
     if (component.id === "distm1") {
       componentExists = true;
       break;
@@ -397,7 +397,7 @@ viewer.scene.input.on("mouseclicked", (coords) => {
     const entity = pickResult.entity;
     const aabb = entity.aabb;
     const entityCenter = math.getAABB3Center(aabb);
-    console.log(entity.id)
+    // console.log(entity.id)
 
     const metaObject = viewer.metaScene.metaObjects[entity.id];
     const myArray = metaObject['type'].split(":");
@@ -428,4 +428,111 @@ viewer.scene.input.on("mouseclicked", (coords) => {
       });
     }
   }
+});
+
+
+const objectContextMenu = new ContextMenu({
+  items: [
+      [
+          {
+              getTitle: (context) => {
+                  return "Alle ausblenden (" + context.viewer.scene.numVisibleObjects + " angezeigt)";
+              },
+              getEnabled: function (context) {
+                  return (context.viewer.scene.numVisibleObjects > 0);
+              },
+              doAction: function (context) {
+                  context.viewer.scene.setObjectsVisible(context.viewer.scene.visibleObjectIds, false);
+              }
+          },
+          {
+              getTitle: (context) => {
+                return "Ausblenden Eins";
+            },
+            getShown: (context) => {
+                return (!!context.entity);
+            },
+            doAction: function (context) {
+                const scene = context.viewer.scene;
+                const entityId = context.entity.id;
+                const objectIds = [entityId];
+                // console.log(objectIds)
+                scene.setObjectsVisible(objectIds, false);
+            }
+          },
+          {
+              getTitle: (context) => {
+                  return "Alle anzeigen (" + (context.viewer.scene.numObjects - context.viewer.scene.numVisibleObjects) + " Versteckt)";
+              },
+              getEnabled: function (context) {
+                  const scene = context.viewer.scene;
+                  return (scene.numVisibleObjects < scene.numObjects);
+              },
+              doAction: function (context) {
+                  const scene = context.viewer.scene;
+                  scene.setObjectsVisible(scene.objectIds, true);
+                  scene.setObjectsXRayed(scene.xrayedObjectIds, false);
+                  scene.setObjectsSelected(scene.selectedObjectIds, false);
+              }
+          }
+      ],
+      [
+          {
+              getTitle: (context) => {
+                  return (!context.entity.xrayed) ? "X-Ray" : "Undo X-Ray";
+              },
+              getShown: (context) => {
+                  return (!!context.entity);
+              },
+              doAction: function (context) {
+                  context.entity.xrayed = !context.entity.xrayed;
+              }
+          },
+          {
+              title: "Reset X-Ray",
+              getEnabled: function (context) {
+                  return (context.viewer.scene.numXRayedObjects > 0);
+              },
+              doAction: function (context) {
+                  context.viewer.scene.setObjectsXRayed(context.viewer.scene.xrayedObjectIds, false);
+              }
+          }
+      ],
+      // [
+      //     {
+      //         getTitle: (context) => {
+      //             return (!context.entity.selected) ? "Select" : "Undo Select";
+      //         },
+      //         getShown: (context) => {
+      //             return (!!context.entity);
+      //         },
+      //         doAction: function (context) {
+      //             context.entity.selected = !context.entity.selected;
+      //         }
+      //     },
+      //     {
+      //         title: "Clear Selection",
+      //         getEnabled: function (context) {
+      //             return (context.viewer.scene.numSelectedObjects > 0);
+      //         },
+      //         doAction: function (context) {
+      //             context.viewer.scene.setObjectsSelected(context.viewer.scene.selectedObjectIds, false);
+      //         }
+      //     }
+      // ]
+  ],
+  enabled: true
+});
+
+viewer.cameraControl.on("rightClick", function (e) {
+  const hit = viewer.scene.pick({
+      canvasPos: e.canvasPos
+  });
+  objectContextMenu.context = { // Must set context before showing menu
+      viewer: viewer,
+      entity: hit ? hit.entity : null
+  };
+  objectContextMenu.show(e.pagePos[0], e.pagePos[1]);
+
+  e.event.preventDefault();
 });
