@@ -448,3 +448,60 @@ body {
     background: #eeeeee;
     font-weight: normal;
 }
+
+
+
+.side-menu {
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    left: 10px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    width: 110px; /* Adjust the width as needed */
+    max-height: 300px; /* Set a maximum height for the side menu */
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    
+  }
+
+  #bcfList {
+    padding-inline-start: 0;    
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Adjust the gap between items as needed */
+  }
+  
+  .bcf-item {
+    /* border: 1px solid #ccc; */
+    align-items: left;
+    width: 100%; /* Occupy the available space within the side menu */
+    margin-bottom: 1px;
+    list-style-type: none;
+    margin-left: 0;
+    border-bottom: 1px solid #ccc; /* Add a border between rows */
+  }
+  
+  .bcf-item .bcf-title {
+    margin-bottom: 5px;
+  }
+  
+  .bcf-item .bcf-image {
+    width: 100%;
+    height: auto;
+    align-items: left;
+    /* max-width: 100%; */
+  }
+  
+  .bcf-item .bcf-comment {
+    margin-top: 5px;
+    /* max-height: 50px; Remove this line */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Limit the comment to a specific number of lines */
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+  }
+  

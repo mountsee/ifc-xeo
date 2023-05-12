@@ -62,9 +62,13 @@
     <button id="PropertiesBtn" onclick="changePrIcon()" title="Wählen Sie ein Objekt aus, um Eigenschaften hinzuzufügen.&#013Klicken Sie auf diese Schaltfläche, um Eigenschaften zu löschen."><img id="prIcon" src="icons8-show-property-52.png" width="24" height="24"></button>
     <!-- <button id="ToggleAnnotationsBtn">Tog anno</button> -->
     <button id="showTreeButton"> <img src="https://img.icons8.com/android/24/null/flow-chart.png"/></button> 
-    
+    <button id="bcfButton">BCF</button>
+</div>
 <!-- Add a div to display the properties of the selected object -->
 <div id="propertiesPanel" style="display: none;"></div>
+<div class="side-menu">
+    <ul id="bcfList"></ul>
+</div>
 <!-- Include the xeokit SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js"></script>
 <script src="viewer.js" type="module"></script>

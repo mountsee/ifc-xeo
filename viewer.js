@@ -22,7 +22,8 @@ import {
   DistanceMeasurementsPlugin, 
   ContextMenu,
   TreeViewPlugin,
-  AnnotationsPlugin} from
+  AnnotationsPlugin,
+  BCFViewpointsPlugin} from
 "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js";
 
 const viewer = new Viewer({
@@ -536,3 +537,116 @@ viewer.cameraControl.on("rightClick", function (e) {
 
   e.event.preventDefault();
 });
+
+
+// // Create a BCF viewpoints plugin
+// const bcfViewpoints = new BCFViewpointsPlugin(viewer);
+
+// // Variable to store the last guide number
+// let lastGuideNumber = 0;
+
+// // Listen for a click event on the "BCF" button
+// const bcfButton = document.getElementById("bcfButton");
+// const pom = document.createElement('a');
+
+// bcfButton.addEventListener("click", () => {
+//   const viewpoint = bcfViewpoints.getViewpoint();
+//   const viewpointStr = JSON.stringify(viewpoint, null, 4);
+//   console.log(viewpointStr);
+
+//   // Add the viewpoint to the BCF viewpoints plugin
+//   pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(viewpointStr));
+//   console.log(111)
+//   console.log(viewpointStr)
+// });
+
+
+
+
+// Create a BCF viewpoints plugin
+const bcfViewpoints = new BCFViewpointsPlugin(viewer);
+
+// Array to store the created BCF items
+const createdBCFItems = [];
+
+// Variable to store the last guide number
+let lastGuideNumber = 0;
+
+// Listen for a click event on the "BCF" button
+const bcfButton = document.getElementById("bcfButton");
+
+bcfButton.addEventListener("click", () => {
+  const viewpoint = bcfViewpoints.getViewpoint();
+  const viewpointStr = JSON.stringify(viewpoint, null, 4);
+  console.log(viewpointStr);
+
+  // Create a popup dialog for entering the comment
+  const comment = window.prompt("Enter your comment:");
+
+  // Create an image element
+  const image = new Image();
+  image.src = viewpoint.snapshot.snapshot_data; // Assuming the snapshot_data property contains the image data
+  image.style.width = "100px"; // Adjust the width as needed
+  image.style.height = "auto"; // Maintain aspect ratio
+
+  // Get the side menu container
+  const sideMenu = document.getElementById("bcfList");
+
+  // Create a list item to hold the image, title, and comment
+  const listItem = document.createElement("li");
+  listItem.classList.add("bcf-item");
+
+  // Create a span element for the title
+  const titleSpan = document.createElement("span");
+  titleSpan.classList.add("bcf-title");
+  titleSpan.textContent = `BCF ${++lastGuideNumber}`;
+
+  // Create a span element for the comment
+  const commentSpan = document.createElement("span");
+  commentSpan.classList.add("bcf-comment");
+  commentSpan.textContent = comment;
+
+  // Append the title, image, and comment to the list item in the desired order
+  listItem.appendChild(titleSpan);
+  listItem.appendChild(image);
+  listItem.appendChild(commentSpan);
+
+  // Add a click event listener to the list item
+  listItem.addEventListener("click", () => {
+    selectBCFItem(createdBCFItems[lastGuideNumber - 1]);
+  });
+
+  // Append the list item to the side menu
+  sideMenu.appendChild(listItem);
+
+  // Create a new BCF item with the viewpoint and comment
+  const newBCFItem = {
+    title: `BCF ${lastGuideNumber}`,
+    viewpoint: viewpoint,
+    comment: comment,
+    listItem: listItem, // Store the list item for future reference
+  };
+
+  // Push the new BCF item to the array of created BCF items
+  createdBCFItems.push(newBCFItem);
+
+  // Update the side menu with the created BCF item
+  updateSideMenu();
+});
+
+// Function to update the side menu with the BCF items
+function updateSideMenu() {
+  const bcfList = document.getElementById("bcfList");
+  bcfList.innerHTML = ""; // Clear the existing menu items
+
+  createdBCFItems.forEach((item) => {
+    // Append the list item to the side menu
+    bcfList.appendChild(item.listItem);
+  });
+}
+
+// Function to handle selecting a BCF item
+function selectBCFItem(item) {
+  // Perform the desired action when a BCF item is selected
+  console.log("Selected BCF item:", item);
+}
