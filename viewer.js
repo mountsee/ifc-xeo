@@ -532,7 +532,7 @@ const bcfButton = document.getElementById("bcfButton");
 bcfButton.addEventListener("click", () => {
   const viewpoint = bcfViewpoints.getViewpoint();
   const viewpointStr = JSON.stringify(viewpoint, null, 4);
-  console.log(viewpointStr);
+  // console.log(viewpointStr);
 
   // Create a popup dialog for entering the comment
   const comment = window.prompt("Enter your comment:");
