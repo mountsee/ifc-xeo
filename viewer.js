@@ -499,28 +499,6 @@ const objectContextMenu = new ContextMenu({
               }
           }
       ],
-      // [
-      //     {
-      //         getTitle: (context) => {
-      //             return (!context.entity.selected) ? "Select" : "Undo Select";
-      //         },
-      //         getShown: (context) => {
-      //             return (!!context.entity);
-      //         },
-      //         doAction: function (context) {
-      //             context.entity.selected = !context.entity.selected;
-      //         }
-      //     },
-      //     {
-      //         title: "Clear Selection",
-      //         getEnabled: function (context) {
-      //             return (context.viewer.scene.numSelectedObjects > 0);
-      //         },
-      //         doAction: function (context) {
-      //             context.viewer.scene.setObjectsSelected(context.viewer.scene.selectedObjectIds, false);
-      //         }
-      //     }
-      // ]
   ],
   enabled: true
 });
@@ -537,30 +515,6 @@ viewer.cameraControl.on("rightClick", function (e) {
 
   e.event.preventDefault();
 });
-
-
-// // Create a BCF viewpoints plugin
-// const bcfViewpoints = new BCFViewpointsPlugin(viewer);
-
-// // Variable to store the last guide number
-// let lastGuideNumber = 0;
-
-// // Listen for a click event on the "BCF" button
-// const bcfButton = document.getElementById("bcfButton");
-// const pom = document.createElement('a');
-
-// bcfButton.addEventListener("click", () => {
-//   const viewpoint = bcfViewpoints.getViewpoint();
-//   const viewpointStr = JSON.stringify(viewpoint, null, 4);
-//   console.log(viewpointStr);
-
-//   // Add the viewpoint to the BCF viewpoints plugin
-//   pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(viewpointStr));
-//   console.log(111)
-//   console.log(viewpointStr)
-// });
-
-
 
 
 // Create a BCF viewpoints plugin
